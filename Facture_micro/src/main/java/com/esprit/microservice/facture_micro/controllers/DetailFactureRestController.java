@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.esprit.microservice.facture_micro.entities.DetailFacture;
 import com.esprit.microservice.facture_micro.services.DetailFactureService;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/DetailFacture")
 public class DetailFactureRestController {
@@ -30,6 +29,7 @@ public class DetailFactureRestController {
 	@ResponseBody
 	public DetailFacture add(@RequestBody DetailFacture df,@PathVariable("facture-id") Long idFacture) {
 		Facture f = factureService.retrieveFacture(idFacture);
+	
 		df.setFacture(f);
 		return detailFactureService.adddetailFacture(df);
 	}

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.esprit.microservice.facture_micro.entities.Facture;
 import com.esprit.microservice.facture_micro.services.FactureService;
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/Facture")
 

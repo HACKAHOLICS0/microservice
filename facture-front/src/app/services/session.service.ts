@@ -24,7 +24,7 @@ export class SessionService {
       idUser: 1,
       email: 'test@user.com',
       badge: 'MODERATEUR',  // Default user badge
-     // badge: 'USER',
+    // badge: 'USER',
       nom: 'Test',
       prenom: 'User',
       dateNaissance: new Date('1990-01-01'),

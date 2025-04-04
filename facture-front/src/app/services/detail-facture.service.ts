@@ -11,16 +11,16 @@ export class DetailFactureService {
 
   constructor(private myhttp:HttpClient) { }
   public deleteDetailFacture(id:number){
-    return this.myhttp.delete("http://localhost:8082/Facture/DetailFacture/remove/"+id);
+    return this.myhttp.delete("http://localhost:8084/Facture/DetailFacture/remove/"+id);
   }
   public add(detail:DetailFacture,id:number){
-    return this.myhttp.post("http://localhost:8082/Facture/DetailFacture/add/"+id,detail)
+    return this.myhttp.post("http://localhost:8084/Facture/DetailFacture/add/"+id,detail)
   }
   public UpdateDetailFacture(df:DetailFacture):Observable<DetailFacture>{
-    return this.myhttp.put<DetailFacture>("http://localhost:8082/Facture/DetailFacture/modify",df);
+    return this.myhttp.put<DetailFacture>("http://localhost:8084/Facture/DetailFacture/modify",df);
   }
    public UpdateDetailFactureQuantite(df:DetailFacture){
-  return this.myhttp.put<DetailFacture>("http://localhost:8082/Facture/DetailFacture/modify/quantite",df);
+  return this.myhttp.put<DetailFacture>("http://localhost:8084/Facture/DetailFacture/modify/quantite",df);
 }
 
 }

@@ -15,20 +15,20 @@ export class FactureService {
   constructor(private myhttp:HttpClient) { }
 
   public getFactures():Observable<Facture[]>{
-    return this.myhttp.get<Facture[]>("http://localhost:8082/Facture/Facture/retrieve-all-Factures");
+    return this.myhttp.get<Facture[]>("http://localhost:8084/Facture/Facture/retrieve-all-Factures");
   }
   public addFacture (f:Facture):Observable<Facture>
-  {return this.myhttp.post<Facture>("http://localhost:8082/Facture/Facture/add-facture",f);}
+  {return this.myhttp.post<Facture>("http://localhost:8084/Facture/Facture/add-facture",f);}
 
   public deleteFacture(id:number){
-    return this.myhttp.delete("http://localhost:8082/Facture/Facture/remove-facture/"+id);
+    return this.myhttp.delete("http://localhost:8084/Facture/Facture/remove-facture/"+id);
 
   }
   public getFacture(id:number):Observable<Facture>{
-    return this.myhttp.get<Facture>("http://localhost:8082/Facture/Facture/retrieve/"+id);
+    return this.myhttp.get<Facture>("http://localhost:8084/Facture/Facture/retrieve/"+id);
   }
   public UpdateFacture(f:Facture):Observable<Facture>{
-    return this.myhttp.put<Facture>("http://localhost:8082/Facture/Facture/modify-facture",f);
+    return this.myhttp.put<Facture>("http://localhost:8084/Facture/Facture/modify-facture",f);
   }
   public updateMontant(id:number):number{
      let montant:number=0;
