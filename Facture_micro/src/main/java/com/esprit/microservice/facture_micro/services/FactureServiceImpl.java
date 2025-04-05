@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Date;
 
 import com.esprit.microservice.facture_micro.entities.DetailFacture;
+import com.esprit.microservice.facture_micro.utils.FactureAddedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esprit.microservice.facture_micro.entities.Facture;
@@ -14,7 +16,13 @@ import com.esprit.microservice.facture_micro.repositories.FactureRepository;
 public class FactureServiceImpl implements FactureService {
 	@Autowired
 	FactureRepository factureRepository;
-	
+	private final ApplicationEventPublisher eventPublisher;
+
+	public FactureServiceImpl(ApplicationEventPublisher eventPublisher, FactureRepository factureRepository) {
+		this.eventPublisher = eventPublisher;
+		this.factureRepository = factureRepository;
+	}
+
 	@Override
 	public List<Facture> retrieveAllFactures() {
 		return (List<Facture>) factureRepository.findAll();
@@ -30,7 +38,13 @@ public class FactureServiceImpl implements FactureService {
 		}
 
 		System.out.println("ID utilisateur dans la facture : " + f.getUserId());  // Vérifiez si l'ID utilisateur est bien assigné
-		return factureRepository.save(f);  // Sauvegarde la facture et ses détails
+		Facture savedFacture = factureRepository.save(f);
+
+		// Publier l'événement
+		eventPublisher.publishEvent(new FactureAddedEvent(this, savedFacture.getIdFacture()));
+
+		return savedFacture;
+		// Sauvegarde la facture et ses détails
 	}
 
 

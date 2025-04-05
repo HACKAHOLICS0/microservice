@@ -17,6 +17,11 @@ import com.esprit.microservice.facture_micro.services.FactureService;
 public class FactureRestController {
 	@Autowired
 	FactureServiceImpl FactureService ;
+
+	public FactureRestController(FactureServiceImpl factureService) {
+		FactureService = factureService;
+	}
+
 	//http://localhost:8081/SpringMVC/Facture/retrieve-all-Factures
 	@Operation(summary = "Récupérer toutes les factures")
 	@GetMapping("/retrieve-all-Factures")
