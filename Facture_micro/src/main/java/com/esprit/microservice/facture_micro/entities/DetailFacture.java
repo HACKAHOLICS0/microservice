@@ -2,11 +2,9 @@ package com.esprit.microservice.facture_micro.entities;
 
 import java.io.Serializable;
 
-import com.esprit.microservice.facture_micro.utils.StaticData;
+import com.lowagie.text.pdf.PdfPCell;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -38,7 +36,7 @@ public class DetailFacture implements Serializable {
         this.idDetailFacture = idDetailFacture;
     }
 
-    public Long getProductId() {
+    public long getProductId() {
         return productId;
     }
 
