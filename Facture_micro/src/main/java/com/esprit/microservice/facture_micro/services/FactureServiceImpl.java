@@ -2,6 +2,8 @@ package com.esprit.microservice.facture_micro.services;
 
 import java.util.List;
 import java.util.Date;
+
+import com.esprit.microservice.facture_micro.entities.DetailFacture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +24,15 @@ public class FactureServiceImpl implements FactureService {
 	@Transactional
 
 	public Facture addFacture(Facture f) {
+		// Associer la facture à ses détails
+		for (DetailFacture detail : f.getDetailFacture()) {
+			detail.setFacture(f);  // Associe chaque détail à la facture
+		}
+
 		System.out.println("ID utilisateur dans la facture : " + f.getUserId());  // Vérifiez si l'ID utilisateur est bien assigné
-		return factureRepository.save(f);
+		return factureRepository.save(f);  // Sauvegarde la facture et ses détails
 	}
+
 
 
 	@Override
@@ -37,9 +45,17 @@ public class FactureServiceImpl implements FactureService {
 	@Override
 	@Transactional
 	public Facture updateFacture(Facture f) {
+		// Associer la facture aux détails avant la mise à jour
+		for (DetailFacture detail : f.getDetailFacture()) {
+			detail.setFacture(f);  // Associe chaque détail à la facture
+		}
+
+		// Enregistrer la facture avec ses détails associés
 		factureRepository.save(f);
+
 		return f;
 	}
+
 
 	@Override
 	public Facture retrieveFacture(Long id) {
