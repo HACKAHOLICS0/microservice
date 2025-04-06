@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,13 @@ public class SupplierController {
                         if (result == null) {
                             return ResponseEntity.status(404).body(Map.of("error", "No result from geolocation API"));
                         }
-                        return ResponseEntity.ok(result);
+                        String lat = (String) result.get("lat");
+                        String lon = (String) result.get("lon");
+                        String googleMapsUrl = "https://www.google.com/maps?q=" + lat + "," + lon;
+                        Map<String, Object> enrichedResult = new HashMap<>(result);
+                        enrichedResult.put("googleMapsUrl", googleMapsUrl);
+
+                        return ResponseEntity.ok(enrichedResult);
                     });
 
         } catch (Exception e) {
