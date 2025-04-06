@@ -1,7 +1,6 @@
 package com.esprit.microservice.reclamation.repositories;
 
 import com.esprit.microservice.reclamation.entities.Reclamation;
-import com.esprit.microservice.reclamation.entities.Reclamation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
