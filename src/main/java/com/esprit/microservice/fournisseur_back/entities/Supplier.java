@@ -84,4 +84,11 @@ public class Supplier {
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SupplierProducts> products;
 
+    public List<SupplierProducts> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<SupplierProducts> products) {
+        this.products = products;
+    }
 }
