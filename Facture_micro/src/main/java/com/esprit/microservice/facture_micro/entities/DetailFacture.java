@@ -27,8 +27,7 @@ public class DetailFacture implements Serializable {
     @JoinColumn(name = "facture_id")
     @JsonIgnore
     private Facture facture;
-
-    public Long getIdDetailFacture() {
+ public Long getIdDetailFacture() {
         return idDetailFacture;
     }
 

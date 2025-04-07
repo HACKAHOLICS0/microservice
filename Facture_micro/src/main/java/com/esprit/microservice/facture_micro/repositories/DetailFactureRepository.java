@@ -18,5 +18,6 @@ public interface DetailFactureRepository extends JpaRepository<DetailFacture, Lo
 	@Query("UPDATE DetailFacture d SET d.qte = :qte WHERE d.idDetailFacture = :id")
 	int updatedetailFactureQuantite(@Param("qte") Integer qte, @Param("id") Long id);
 	List<DetailFacture> findByFacture(Facture facture);
-
+	@Query("SELECT d FROM DetailFacture d WHERE d.facture.idFacture = :factureId")
+	List<DetailFacture> findByFactureId(@Param("factureId") Long factureId);
 }

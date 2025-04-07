@@ -2,6 +2,7 @@ package com.esprit.microservice.facture_micro.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import com.esprit.microservice.facture_micro.entities.Facture;
 import com.esprit.microservice.facture_micro.repositories.FactureRepository;
@@ -35,7 +36,7 @@ public class DetailFactureServiceImpl implements DetailFactureService {
 	@Transactional
 	@Override
 	public DetailFacture adddetailFacture(DetailFacture detail) {
-		if (detail.getFacture() == null || detail.getFacture().getIdFacture() == null) {
+		if (detail.getFacture().getIdFacture()==null) {
 			throw new IllegalArgumentException("La facture associée au détail est manquante.");
 		}
 
@@ -81,23 +82,56 @@ public class DetailFactureServiceImpl implements DetailFactureService {
 
 	@Override
 	public void deletedetailFacture(Long id) {
-		DetailFacture f = new DetailFacture ();
-		f.setIdDetailFacture(id);
-		detailFactureRepository.delete(f);
+		try {
+			// Suppression du détail de facture par son ID
+			detailFactureRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new RuntimeException("La suppression du détail de facture a échoué.", e);
+		}
 	}
 
-	@Override
+
 	@Transactional
+	@Override
 	public DetailFacture updatedetailFacture(DetailFacture f) {
-	return detailFactureRepository.save(f);
+		// Récupérer le détail de facture par son ID
+		DetailFacture existingDetailFacture = detailFactureRepository.findById(f.getIdDetailFacture())
+				.orElseThrow(() -> new IllegalArgumentException("Le détail de facture n'existe pas."));
 
+		// Récupérer la facture associée au détail de facture existant
+		Facture facture = existingDetailFacture.getFacture();
+		if (facture == null) {
+			throw new IllegalArgumentException("La facture associée à ce détail n'existe pas.");
+		}
 
+		// Mettre à jour les informations du détail de facture
+		existingDetailFacture.setProductId(f.getProductId());
+		existingDetailFacture.setQte(f.getQte());
+
+		// Sauvegarder le détail de facture mis à jour
+		return detailFactureRepository.save(existingDetailFacture);
 	}
 
 	@Override
-	public DetailFacture retrievedetailFacture(Long id) {
-		return detailFactureRepository.findById(id).orElse(null);
+	public Optional<DetailFacture> findById(Long idDetailFacture) {
+		return detailFactureRepository.findById(idDetailFacture);
 	}
+
+
+
+
+	@Override
+	public void retrievedetailFacture(Long id) {
+		DetailFacture existingDetailFacture = detailFactureRepository.findById(id).orElse(null);
+
+		if (existingDetailFacture != null) {
+			// Supprimer le détail de facture si trouvé
+			detailFactureRepository.delete(existingDetailFacture);
+		} else {
+			throw new IllegalArgumentException("Le détail de facture avec l'ID " + id + " n'existe pas.");
+		}
+	}
+
 
 
 	@Override
@@ -105,4 +139,27 @@ public class DetailFactureServiceImpl implements DetailFactureService {
 		return detailFactureRepository.updatedetailFactureQuantite(df.getQte(), df.getIdDetailFacture());
 
 	}
+
+	@Transactional
+	@Override
+	public void deleteDetailFacturesByFactureId(Long factureId) {
+		try {
+			// Vérifier si la facture existe
+			Facture facture = factureRepository.findById(factureId).orElse(null);
+			if (facture != null) {
+				// Supprimer tous les détails associés
+				List<DetailFacture> detailsFacture = facture.getDetailFacture();
+				if (detailsFacture != null) {
+					for (DetailFacture detail : detailsFacture) {
+						detailFactureRepository.delete(detail);  // Suppression de chaque détail
+					}
+				}
+				// Une fois les détails supprimés, supprimer la facture si nécessaire
+				factureRepository.delete(facture); // Vous pouvez aussi choisir de ne pas supprimer la facture elle-même ici
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("La suppression des détails de facture a échoué.", e);
+		}
+	}
+
 }
