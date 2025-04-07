@@ -52,39 +52,39 @@ export class CommandeComponent implements OnInit {
   addFacture(f: Facture): void {
     const user = this.sessionService.getUser();
     if (user) {
-      f.userId = user.idUser;  // Assurez-vous d'affecter l'ID utilisateur à userId
+      f.userId = user.idUser;
       console.log("ID utilisateur assigné à la facture : ", f.userId);
 
       // Traiter chaque élément du panier et assigner les IDs des produits
       f.detailFacture.forEach(item => {
-        item.productId = item.produit.idProduit;  // Assigner l'ID du produit
+        item.productId = item.produit.idProduit;
       });
 
-      // Ajouter la facture d'abord, puis ajouter les détails avec le factureId
-      this.factureService.addFacture(f).subscribe((fact) => {
-        // Après avoir créé la facture, assigne le factureId à chaque détail
-        f.idFacture = fact.idFacture;  // Assigner l'ID de la facture à chaque détail
+      // Ajouter la facture d'abord
+      this.factureService.addFacture(f).subscribe({
+        next: (fact) => {
+          f.idFacture = fact.idFacture;
 
-        // Ajouter chaque détail de la facture
-        for (let item of f.detailFacture) {
-          this.detailFactureService.add(item, fact.idFacture).subscribe(
-            () => {
-              this.facture = new Facture();
-              this.sessionService.setPanier([]);  // Vider le panier après la création de la facture
-              this.showFacture = false;
-            }
-          );
+          // Ajouter tous les détails de la facture en une seule fois
+          const detailsToAdd = f.detailFacture.map(item => {
+            item.factureId = fact.idFacture;
+            return this.detailFactureService.add(item, fact.idFacture);
+          });
+
+          // Attendre que tous les détails soient ajoutés
+          Promise.all(detailsToAdd).then(() => {
+            this.facture = new Facture();
+            this.sessionService.setPanier([]);
+            this.showFacture = false;
+            this.BackToProduct();
+          });
+        },
+        error: (error) => {
+          console.error('Erreur lors de l\'ajout de la facture:', error);
         }
-
-        this.showFacture = false;
-        this.BackToProduct();
       });
     }
   }
-
-
-
-
 
   BackToProduct(): void {
     this.showMessage = true;
