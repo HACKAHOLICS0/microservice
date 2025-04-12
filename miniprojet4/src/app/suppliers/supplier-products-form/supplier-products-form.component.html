@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Add Product to Supplier</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="supplierProductForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="produit" class="form-label">Product</label>
+              <select class="form-select" id="produit" formControlName="produit" [class.is-invalid]="supplierProductForm.get('produit')?.invalid && supplierProductForm.get('produit')?.touched">
+                <option value="">Select a product</option>
+                <!-- Add product options here -->
+              </select>
+              <div class="invalid-feedback" *ngIf="supplierProductForm.get('produit')?.invalid && supplierProductForm.get('produit')?.touched">
+                Please select a product
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="qte" class="form-label">Quantity</label>
+              <input type="number" class="form-control" id="qte" formControlName="qte" min="1" [class.is-invalid]="supplierProductForm.get('qte')?.invalid && supplierProductForm.get('qte')?.touched">
+              <div class="invalid-feedback" *ngIf="supplierProductForm.get('qte')?.invalid && supplierProductForm.get('qte')?.touched">
+                Please enter a valid quantity (minimum 1)
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button type="button" class="btn btn-secondary me-md-2" (click)="cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="supplierProductForm.invalid">
+                Add Product
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
