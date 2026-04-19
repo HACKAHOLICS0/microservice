@@ -12,11 +12,21 @@
         <module name="ApiGateway" />
         <module name="microservices" />
       </profile>
+      <profile name="Annotation profile for Fournisseur_Back" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="Fournisseur_Back" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
+      <module name="Fournisseur_Back" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="microservices" options="-parameters" />
       <module name="serverdiscover" options="-parameters" />

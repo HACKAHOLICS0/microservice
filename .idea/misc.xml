@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/serverdiscover/pom.xml" />
         <option value="$PROJECT_DIR$/projetmicroservicesrepasfiras/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-Supplier/pom.xml" />
       </list>
     </option>
   </component>

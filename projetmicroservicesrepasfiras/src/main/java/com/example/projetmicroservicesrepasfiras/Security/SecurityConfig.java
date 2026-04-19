@@ -55,7 +55,9 @@ public class SecurityConfig {
                 System.out.println("Configuring authorization rules");
                 authorize
                     .requestMatchers("/auth/welcome").permitAll()
-                    .requestMatchers("/auth/hello").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+
+                        .requestMatchers("/auth/hello").permitAll()
                     .requestMatchers("/auth/register").permitAll()
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/auth/google").permitAll()
@@ -93,14 +95,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
-        configuration.setMaxAge(3600L);
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }

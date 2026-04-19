@@ -62,29 +62,28 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{id}")
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+//        try {
+//            User user = userService.updateUser(id, updatedUser);
+//            return ResponseEntity.ok(user);
+//        } catch (IllegalStateException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         try {
-            User user = userService.updateUser(id, updatedUser);
-            return ResponseEntity.ok(user);
+            userService.deleteUser(id);
+            return ResponseEntity.noContent().build(); // ✅ 204 No Content
         } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build(); // ou ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.ok().body("User deleted successfully");
-        } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error deleting user: " + e.getMessage());
-        }
-    }
 
     @GetMapping("/download-pdf")
     @PreAuthorize("hasRole('ADMIN')")

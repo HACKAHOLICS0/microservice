@@ -22,7 +22,21 @@ public class ApiGatewayApplication {
                         .uri("lb://projetmicroservicesrepasfiras"))
                 .route("user-service-api", r -> r.path("/api/**")
                         .uri("lb://projetmicroservicesrepasfiras"))
+                .route("product", r -> r.path("/product/**")
+                        .uri("http://localhost:8086/"))
+                .route("productCategory", r -> r.path("/productCategory/**")
+                        .uri("http://localhost:8086/"))
+                .route("fournisseurs", r -> r.path("/fournisseurs/**")
+                        .uri("lb://FOURNISSEUR_BACK"))
 
+                .route("produit-fournisseurs", r -> r.path("/produit-fournisseurs/**")
+                        .uri("lb://FOURNISSEUR_BACK"))
+
+                .route("facture", r -> r.path("/Facture/**")
+                        .uri("http://localhost:8082/"))
+                .route("reclamations", r -> r.path("/reclamations/**")
+                        .uri("http://localhost:8081/"))
                 .build();
     }
+
 }

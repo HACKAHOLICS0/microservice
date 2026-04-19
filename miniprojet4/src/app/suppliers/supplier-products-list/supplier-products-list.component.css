@@ -1,0 +1,37 @@
+.table-responsive {
+  margin-top: 20px;
+}
+
+.table th {
+  background-color: #343a40;
+  color: white;
+}
+
+.btn-group {
+  gap: 5px;
+}
+
+.input-group {
+  max-width: 400px;
+}
+
+.search-button {
+  cursor: pointer;
+}
+
+.currency {
+  text-align: right;
+}
+
+.percentage {
+  text-align: center;
+}
+
+.quantity {
+  text-align: center;
+}
+
+.total-price {
+  font-weight: bold;
+  color: #28a745;
+} 

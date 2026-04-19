@@ -1,0 +1,80 @@
+/* Styles pour les notifications */
+.notification-list {
+  margin-top: 20px;
+}
+
+.notification-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: #0d6efd;
+  font-size: 1.2rem;
+}
+
+.notification-actions {
+  display: flex;
+  align-items: center;
+}
+
+.notification-actions button {
+  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notification-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Style pour les boutons d'action */
+.btn-outline-primary, .btn-outline-danger {
+  border-width: 2px;
+  padding: 0.25rem 0.75rem;
+  font-weight: 500;
+  background-color: white;
+}
+
+.btn-outline-primary {
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-outline-primary i, .btn-outline-danger i {
+  font-size: 0.875rem;
+}
+
+/* Style pour les notifications non lues */
+.bg-light {
+  background-color: #e8f4fe !important;
+  border-left: 3px solid #0d6efd;
+}
+
+/* Style pour le switch */
+.form-switch .form-check-input {
+  width: 2.5em;
+  height: 1.25em;
+}
+
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}

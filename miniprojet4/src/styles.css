@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~angular-notifier/styles/core.css";
+@import "~angular-notifier/styles/themes/theme-material.css";
+@import "~angular-notifier/styles/types/type-info.css";
+
+/* Styles globaux pour les boutons */
+.btn {
+  font-size: 0.8rem;
+  border-radius: 10rem;
+  padding: 0.75rem 1rem;
+}
+
+/* Styles globaux pour les notifications */
+.notification-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: #0d6efd;
+}
+
+/* Styles pour les boutons d'action dans les notifications */
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.btn-outline-primary, .btn-outline-danger, .btn-outline-light {
+  border-width: 2px;
+}
+
+/* Styles pour les boutons dans l'en-tête des notifications */
+.card-header .btn-light {
+  background-color: white;
+  color: #0d6efd;
+  border-color: white;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header .btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Styles pour les badges de notification */
+.badge.bg-danger {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+}

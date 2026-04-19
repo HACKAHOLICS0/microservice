@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/home">Microservices App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/products" routerLinkActive="active">Produits</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/suppliers" routerLinkActive="active">Fournisseurs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/factures" routerLinkActive="active">Factures</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/reclamations" routerLinkActive="active">Réclamations</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <!-- Composant de notification -->
+        <div class="me-3" *ngIf="isLoggedIn">
+          <app-notification-dropdown></app-notification-dropdown>
+        </div>
+
+        <!-- Boutons de connexion/déconnexion -->
+        <div *ngIf="!isLoggedIn">
+          <button type="button" class="btn btn-outline-light me-2" routerLink="/users/login">Connexion</button>
+          <button type="button" class="btn btn-light" routerLink="/users/register">Inscription</button>
+        </div>
+
+        <div *ngIf="isLoggedIn" class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ currentUser?.username || 'Utilisateur' }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" routerLink="/users/profile">Profil</a></li>
+            <li><a class="dropdown-item" routerLink="/preferences">Préférences</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

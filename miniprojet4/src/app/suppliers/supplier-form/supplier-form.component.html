@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{ isEditMode ? 'Edit Supplier' : 'Add New Supplier' }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="nom" class="form-label">Name</label>
+              <input type="text" class="form-control" id="nom" formControlName="nom" [class.is-invalid]="supplierForm.get('nom')?.invalid && supplierForm.get('nom')?.touched">
+              <div class="invalid-feedback" *ngIf="supplierForm.get('nom')?.invalid && supplierForm.get('nom')?.touched">
+                Name is required
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" formControlName="email" [class.is-invalid]="supplierForm.get('email')?.invalid && supplierForm.get('email')?.touched">
+              <div class="invalid-feedback" *ngIf="supplierForm.get('email')?.invalid && supplierForm.get('email')?.touched">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="telephone" class="form-label">Phone</label>
+              <input type="text" class="form-control" id="telephone" formControlName="telephone" [class.is-invalid]="supplierForm.get('telephone')?.invalid && supplierForm.get('telephone')?.touched">
+              <div class="invalid-feedback" *ngIf="supplierForm.get('telephone')?.invalid && supplierForm.get('telephone')?.touched">
+                Phone number is required
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="adresse" class="form-label">Address</label>
+              <textarea class="form-control" id="adresse" formControlName="adresse" rows="3" [class.is-invalid]="supplierForm.get('adresse')?.invalid && supplierForm.get('adresse')?.touched"></textarea>
+              <div class="invalid-feedback" *ngIf="supplierForm.get('adresse')?.invalid && supplierForm.get('adresse')?.touched">
+                Address is required
+              </div>
+            </div>
+
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="etat" formControlName="etat">
+              <label class="form-check-label" for="etat">Active</label>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button type="button" class="btn btn-secondary me-md-2" (click)="cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="supplierForm.invalid">
+                {{ isEditMode ? 'Update' : 'Save' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

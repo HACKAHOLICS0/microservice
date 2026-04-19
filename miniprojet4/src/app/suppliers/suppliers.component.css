@@ -1,0 +1,14 @@
+.container {
+  padding: 20px;
+}
+
+h2 {
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #6c757d;
+  font-size: 1.1rem;
+  line-height: 1.5;
+} 

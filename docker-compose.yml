@@ -2,6 +2,31 @@ version: '3.8'
 
 services:
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - spring-cloud-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - spring-cloud-network
+
   eureka-server:
     build: ./serverdiscover
 
@@ -24,17 +49,75 @@ services:
       - spring-cloud-network
 
   projetmicroservicesrepasfiras:
-    build: ./projetmicroservicesrepasfiras  # Corrigé ici
-    container_name: user-service  # Nom du container corrigé si nécessaire
+    build: ./projetmicroservicesrepasfiras
+    container_name: user-service
     ports:
       - "8084:8084"
     depends_on:
       - eureka-server
+      - mysql
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/user_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - spring-cloud-network
+
+  facture-service:
+    build: ./Facture_micro
+    container_name: facture-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+      - mysql
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/facture?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - spring-cloud-network
+
+  reviews-notification-service:
+    build: ./reviews-service-nodejs
+    container_name: reviews-notification-service
+    ports:
+      - "8087:8087"
+    depends_on:
+      - eureka-server
+      - mongodb
+    environment:
+      # Configuration du service
+      - PORT=8087
+      - NODE_ENV=production
+      - APP_NAME=reviews-notification-service
+
+      # Configuration MongoDB pour Docker
+      - MONGODB_URI=mongodb://mongodb:27017/reviews-notification-service
+
+      # Configuration Eureka pour Docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+
+      # Configuration du client Eureka
+      - EUREKA_HOST=eureka-server
+      - EUREKA_PORT=8761
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8087/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - spring-cloud-network
 
 networks:
   spring-cloud-network:
     driver: bridge
+
+volumes:
+  mysql_data:
+  mongodb_data:

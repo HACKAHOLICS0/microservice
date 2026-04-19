@@ -1,0 +1,130 @@
+.notification-dropdown {
+  position: relative;
+}
+
+/* Style amélioré pour le bouton de notification */
+.notification-dropdown button.btn-link {
+  color: #000;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0 10px;
+  transition: all 0.3s;
+  border: 2px solid #000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.notification-dropdown button.btn-link:hover {
+  background-color: #f8f9fa;
+  transform: scale(1.05);
+}
+
+.notification-dropdown button.btn-link i {
+  font-size: 1.2rem;
+  color: #000;
+  font-weight: bold;
+}
+
+.notification-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  padding: 0;
+  margin: 0.125rem 0 0;
+  font-size: 0.875rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+.notification-menu.show {
+  display: block;
+}
+
+.dropdown-header {
+  padding: 0.75rem 1rem;
+  background-color: #f8f9fa;
+}
+
+.dropdown-footer {
+  padding: 0.5rem 0;
+  background-color: #f8f9fa;
+}
+
+.dropdown-footer a {
+  text-decoration: none;
+  color: #0d6efd;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.notification-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+  text-decoration: none;
+  color: #212529;
+  display: block;
+}
+
+.notification-item:hover {
+  background-color: #f8f9fa;
+}
+
+.notification-item.unread {
+  background-color: #e8f4fe;
+}
+
+.notification-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: #6c757d;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.notification-text {
+  font-size: 0.8125rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #adb5bd;
+}
